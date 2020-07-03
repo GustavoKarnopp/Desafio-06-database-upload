@@ -1,10 +1,10 @@
-import { getRepository, In, getCustomRepository } from 'typeorm';
+import { getRepository, getCustomRepository, In } from 'typeorm';
 import csvParse from 'csv-parse';
 
 import fs from 'fs';
 import Transaction from '../models/Transaction';
-import Category from '../models/Category';
 import TransactionsRepository from '../repositories/TransactionsRepository';
+import Category from '../models/Category';
 
 interface CSVTransaction {
   title: string;
@@ -30,7 +30,7 @@ class ImportTransactionsService {
     const categories: string[] = [];
 
     parseCSV.on('data', async line => {
-      const { title, type, value, category } = line.map((cell: string) =>
+      const [title, type, value, category] = line.map((cell: string) =>
         cell.trim(),
       );
 
